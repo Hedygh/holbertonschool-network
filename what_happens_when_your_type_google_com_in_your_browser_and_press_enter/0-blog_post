@@ -1,0 +1,200 @@
+What Happens When You Type https://www.google.com in Your Browser and Press Enter?
+
+One of the most common interview questions in software engineering is:
+
+"What happens when you type https://www.google.com in your browser and press Enter?"
+
+At first, the answer seems simple: Google opens.
+
+In reality, dozens of systems work together in a matter of milliseconds to make that happen. While studying networking and web infrastructure at Holberton School, I found this question particularly interesting because it connects many concepts that are often learned separately: DNS, networking, web servers, databases, security, and load balancing.
+
+Let's follow the journey of a request from the browser to the server and back.
+
+1. DNS Resolution
+
+The first problem is that computers do not understand domain names such as:
+
+https://www.google.com
+
+They communicate using IP addresses.
+
+Before connecting to Google, the browser must discover which IP address corresponds to the domain name.
+
+To do this, it sends a DNS request.
+
+DNS (Domain Name System) works like the internet's phone book.
+
+Example:
+
+google.com → 142.250.xxx.xxx
+
+Once the browser receives the IP address, it knows where to send the request.
+
+Without DNS, users would need to memorize numerical IP addresses instead of simple domain names.
+
+2. Establishing a TCP/IP Connection
+
+Now that the browser knows Google's IP address, it needs to establish a connection.
+
+This happens using the TCP/IP protocol suite.
+
+TCP is responsible for creating a reliable connection between the client and the server.
+
+You can think of TCP as a conversation setup:
+
+Client: "Can we talk?"
+Server: "Yes."
+Client: "Great, let's start."
+
+This process is called the TCP Three-Way Handshake.
+
+Once completed, both machines can exchange data reliably.
+
+Because the website uses HTTPS, the browser connects to port 443, the standard port for secure web traffic.
+
+3. HTTPS and SSL/TLS Encryption
+
+At this stage, the browser and Google's servers establish a secure encrypted connection.
+
+This is where SSL/TLS comes into play.
+
+The browser verifies Google's SSL certificate and negotiates encryption keys.
+
+After that, all communication becomes encrypted.
+
+Without HTTPS, information such as:
+
+Passwords
+Cookies
+Personal information
+
+could potentially be intercepted while traveling across the network.
+
+With HTTPS, the data becomes unreadable to anyone who does not possess the encryption keys.
+
+This is why modern browsers display a padlock icon next to secure websites.
+
+4. Passing Through Firewalls
+
+Before reaching Google's infrastructure, traffic passes through multiple security layers.
+
+One of these layers is the firewall.
+
+A firewall acts like a security checkpoint.
+
+Its role is to:
+
+Allow legitimate traffic
+Block unauthorized connections
+Protect internal systems
+
+For example, a firewall may allow HTTPS traffic on port 443 while blocking unnecessary services.
+
+Without firewalls, servers would be significantly more exposed to attacks.
+
+5. Reaching the Load Balancer
+
+Google receives an enormous number of requests every second.
+
+Sending all traffic to a single server would be impossible.
+
+This is where a load balancer becomes essential.
+
+A load balancer receives incoming requests and distributes them among multiple servers.
+
+For example:
+
+Request 1 → Server A
+
+Request 2 → Server B
+
+Request 3 → Server C
+
+This improves:
+
+Performance
+Availability
+Scalability
+
+If one server fails, the load balancer can redirect traffic to healthy servers.
+
+6. The Web Server
+
+After being distributed by the load balancer, the request reaches a web server.
+
+Examples of web servers include:
+
+Nginx
+Apache
+
+The web server's role is to receive HTTP requests and determine how they should be handled.
+
+If the request is for a static file such as:
+
+Images
+CSS files
+JavaScript files
+
+the web server may serve it directly.
+
+If dynamic content is required, the request is forwarded to the application server.
+
+7. The Application Server
+
+The application server contains the business logic of the application.
+
+This is where the website actually "thinks."
+
+For example, if a user searches for information, logs in, or accesses a profile page, the application server processes that request.
+
+Its responsibilities include:
+
+Executing code
+Validating data
+Processing business rules
+Communicating with databases
+
+Unlike the web server, the application server generates dynamic content.
+
+8. Querying the Database
+
+Many requests require stored information.
+
+The application server may need to retrieve:
+
+User accounts
+Search results
+Product information
+Preferences
+
+To do this, it communicates with a database.
+
+A simplified example might look like:
+
+SELECT * FROM users WHERE id = 42;
+
+The database processes the query and returns the requested information.
+
+The application server then uses this data to build the final response.
+
+9. Returning the Response
+
+Once the page has been generated, the response travels back through the same chain:
+
+Database → Application Server → Web Server → Load Balancer → Internet → Browser
+
+The browser receives HTML, CSS, JavaScript, images, and other resources.
+
+Finally, it renders the page that the user sees on the screen.
+
+All of this typically happens in a fraction of a second.
+
+Conclusion
+
+Typing a URL and pressing Enter feels like a simple action, but it triggers a complex sequence of events involving networking, security, distributed systems, and databases.
+
+Studying this process helped me connect several concepts that initially seemed unrelated. Understanding how DNS, TCP/IP, HTTPS, load balancing, web servers, application servers, and databases work together provides a much clearer picture of how modern web applications operate behind the scenes.
+
+The next time I open a website, I probably won't think "Google just loaded."
+
+I'll think about the thousands of components that collaborated to make it happen.
